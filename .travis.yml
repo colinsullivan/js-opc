@@ -1,10 +1,7 @@
 language: node_js
 node_js:
-- '0.10'
-- '0.12'
+- 'node'
 - 'iojs'
-before_install:
-- npm install -g npm
 script: |
   if [[ $TRAVIS_JOB_NUMBER = *.1 ]]
   then

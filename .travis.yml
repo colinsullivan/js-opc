@@ -3,12 +3,13 @@ node_js:
 - 'node'
 - 'iojs'
 script: |
-  if [[ $TRAVIS_JOB_NUMBER = *.1 ]]
-  then
-    npm test && npm run test-browser-sauce
-  else
-    npm test
-  fi
+  npm test
+  #if [[ $TRAVIS_JOB_NUMBER = *.1 ]]
+  #then
+    #npm test && npm run test-browser-sauce
+  #else
+    #npm test
+  #fi
 env:
   global:
   # Sauce Labs

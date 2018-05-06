@@ -10,6 +10,34 @@
 
 var isInteger = require("is-integer");
 
+function hsv(h, s, v)
+{
+    /*
+     * Converts an HSV color value to RGB.
+     *
+     * Normal hsv range is in [0, 1], RGB range is [0, 255].
+     * Colors may extend outside these bounds. Hue values will wrap.
+     *
+     * Based on tinycolor:
+     * https://github.com/bgrins/TinyColor/blob/master/tinycolor.js
+     * 2013-08-10, Brian Grinstead, MIT License
+     */
+
+    h = (h % 1) * 6;
+    if (h < 0) h += 6;
+
+    var i = h | 0,
+        f = h - i,
+        p = v * (1 - s),
+        q = v * (1 - f * s),
+        t = v * (1 - (1 - f) * s),
+        r = [v, q, p, p, t, v][i],
+        g = [t, v, v, q, p, p][i],
+        b = [p, p, t, v, v, q][i];
+
+    return [ r * 255, g * 255, b * 255 ];
+}
+
 function getBuffer(input) {
   if (Buffer.isBuffer(input)) {
     if (input.length % 3 !== 0) {
@@ -31,6 +59,10 @@ module.exports = function(lengthOrBuffer) {
     this.buffer.writeUInt8(r, offset);
     this.buffer.writeUInt8(g, offset + 1);
     this.buffer.writeUInt8(b, offset + 2);
+  }
+
+  function setPixelHSV(index, h, s, v) {
+    this.setPixel.apply(this, [index].concat(hsv(h, s, v)));
   }
 
   function getPixel(index) {
@@ -64,6 +96,10 @@ module.exports = function(lengthOrBuffer) {
     setPixel: {
       value: setPixel,
       enumerable: true,
+    },
+    setPixelHSV: {
+      value: setPixelHSV,
+      enumerable: true
     },
     getPixel: {
       value: getPixel,

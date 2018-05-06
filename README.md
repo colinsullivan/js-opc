@@ -105,6 +105,10 @@ command).
 
 Set color at *index* to the given *rgb* value.
 
+### `strand.setPixelHSV(index, h, s, v)`
+
+Set color at *index* to the given *hsv* value.
+
 ### `strand.getPixel(index)`
 
 Return an array representing the *rgb* color value at *index* (e.g.,

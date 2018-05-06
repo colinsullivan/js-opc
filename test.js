@@ -19,6 +19,16 @@ test("opc", function(t) {
   t.equal(strand.buffer.readUInt8((5 * 3) + 1), 2);
   t.equal(strand.buffer.readUInt8((5 * 3) + 2), 3);
 
+  // setting pixel values with HSV
+  strand.setPixelHSV(0, 0.0, 0.0, 1.0);
+  t.deepEqual(strand.getPixel(0), [255, 255, 255]);
+  strand.setPixelHSV(0, 0.0, 0.0, 0.0);
+  t.deepEqual(strand.getPixel(0), [0, 0, 0]);
+  strand.setPixelHSV(0, 0.5, 0.0, 0.0);
+  t.deepEqual(strand.getPixel(0), [0, 0, 0]);
+  strand.setPixelHSV(0, 0.0, 1.0, 1.0);
+  t.deepEqual(strand.getPixel(0), [255, 0, 0]);
+
   // Stream
   var createStream = require("./index");
   var stream = createStream();
